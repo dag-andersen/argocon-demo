@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-app
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    name: in-cluster
+    namespace: default
+  sources:
+    - repoURL: https://github.com/dag-andersen/argocon-demo
+      ref: local-files
+    - path: charts/myApp
+      repoURL: https://github.com/dag-andersen/argocon-demo
+      helm:
+        valueFiles:
+          - $local-files/values/values.yaml
